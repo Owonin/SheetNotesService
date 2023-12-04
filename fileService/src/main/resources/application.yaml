@@ -1,0 +1,51 @@
+server:
+  port: 8092
+
+spring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      bootstrap-servers: localhost:9092
+      group-id: GROUP.PICTURES
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: GROUP.MIDI
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      max-poll-records: 1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      concurrency: 5
+      topics:
+        picture: GROUP.PICTURE
+        midi: GROUP.MIDI
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
+
+api:
+  image:
+    url: /api/picture
+    download: src/main/resources/static/images/
+  midi:
+    url: /api/midi
+    download: src/main/resources/static/midi/
+  auth:
+    url: http://localhost:8091/api/auth
+
+
+logging:
+  file:
+    name: /home/alex/wrtn.log
+  logback:
+    rollingpolicy:
+      max-history: 2
+      max-file-size: 10MB
+  level:
+    root: info
+    org:
+    springframework: info
+
+topics:
+  send: GROUP.PICTURE

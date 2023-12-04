@@ -1,0 +1,44 @@
+server:
+  port: 8091
+
+spring:
+  cache:
+    type: redis
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    timeout: 60000
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/AuthDb
+    username: root
+    password: 123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
+
+api:
+  url: /api/auth
+
+auth:
+  access-secret-key: access-secret
+  refresh-secret-key: refresh-secret
+
+logging:
+  file:
+    name: /home/alex/wrtn.log
+  logback:
+    rollingpolicy:
+      max-history: 2
+      max-file-size: 10MB
+  level:
+    root: info
+    org:
+    springframework: info
+
